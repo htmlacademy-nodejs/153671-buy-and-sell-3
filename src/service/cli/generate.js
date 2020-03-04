@@ -54,7 +54,7 @@ const PictureRestrict = {
   max: 16,
 };
 
-const getPictureFileName = (number) => number > 10 ? `item${number}.jpg` : `item0${number}.jpg`;
+const getPictureFileName = (number) => `item${(0 + number).slice(-2)}.jpg`;
 
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => ({
@@ -62,7 +62,7 @@ const generateOffers = (count) => (
     description: shuffle(SENTENCES).slice(1, 5).join(` `),
     picture: getPictureFileName(getRandomInt(PictureRestrict.min, PictureRestrict.max)),
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
-    type: Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)],
+    type: Object.keys(OfferType)[getRandomInt(0, Object.keys(OfferType).length - 1)],
     sum: getRandomInt(SumRestrict.min, SumRestrict.max),
   }))
 );
@@ -70,7 +70,6 @@ const generateOffers = (count) => (
 module.exports = {
   name: `--generate`,
   run(args) {
-    console.log(process.argv);
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
     const content = JSON.stringify(generateOffers(countOffer));
