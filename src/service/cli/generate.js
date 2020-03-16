@@ -58,9 +58,11 @@ const readContent = async (filePath) => {
 module.exports = {
   name: `--generate`,
   async run(args) {
-    const sentences = await readContent(FILE_SENTENCES_PATH);
-    const titles = await readContent(FILE_TITLES_PATH);
-    const categories = await readContent(FILE_CATEGORIES_PATH);
+    const [categories, titles, sentences] = await Promise.all([
+      readContent(FILE_CATEGORIES_PATH),
+      readContent(FILE_TITLES_PATH),
+      readContent(FILE_SENTENCES_PATH)
+    ]);
 
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
