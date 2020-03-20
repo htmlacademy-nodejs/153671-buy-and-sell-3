@@ -45,7 +45,6 @@ const onClientConnect = async (req, res) => {
       sendResponse(res, HttpCode.NOT_FOUND, notFoundMessageText);
       break;
   }
-
 };
 
 module.exports = {
